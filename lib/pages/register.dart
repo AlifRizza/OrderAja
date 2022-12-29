@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:order_aja_apps/pages/login.dart';
 import 'package:order_aja_apps/pages/profile.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({super.key});
@@ -11,6 +13,12 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   bool isChecked = false;
+  TextEditingController nameC = TextEditingController();
+  TextEditingController emailC = TextEditingController();
+  TextEditingController PassC = TextEditingController();
+  TextEditingController NoC = TextEditingController();
+  TextEditingController TempatC = TextEditingController();
+  TextEditingController TanggalC = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +63,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   TextField(
+                      controller: nameC,
                       autocorrect: false,
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -78,6 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   TextField(
+                      controller: emailC,
                       autocorrect: false,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
@@ -101,8 +111,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   TextField(
+                      controller: PassC,
                       autocorrect: false,
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -124,8 +135,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   TextField(
+                      controller: NoC,
                       autocorrect: false,
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -155,8 +167,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           SizedBox(
                             width: 170,
                             child: TextField(
+                                controller: TempatC,
                                 autocorrect: false,
-                                keyboardType: TextInputType.emailAddress,
+                                keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -187,8 +200,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           SizedBox(
                             width: 170,
                             child: TextField(
+                                controller: TanggalC,
                                 autocorrect: false,
-                                keyboardType: TextInputType.emailAddress,
+                                keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -246,10 +260,24 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ProfilePage(),
-                        ));
+                      onPressed: () async {
+                        var myResponse = await http.post(
+                            Uri.parse(
+                                'https://63ad9ceeceaabafcf167656e.mockapi.io/USER_KASIR'),
+                            body: {
+                              "name": nameC.text,
+                              "email": emailC.text,
+                              "password": PassC.text,
+                              "number": NoC.text,
+                              "tempat_lahir": TempatC.text,
+                              "tanggal_lahir": TanggalC.text
+                            });
+
+                        if (myResponse.statusCode == 201) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LoginPage(),
+                          ));
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(

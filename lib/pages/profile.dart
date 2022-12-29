@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:order_aja_apps/pages/edit_profile.dart';
 import 'package:order_aja_apps/pages/login.dart';
+import 'package:order_aja_apps/pages/beranda.dart';
+import 'package:order_aja_apps/pages/menu.dart';
+import 'package:order_aja_apps/pages/detailOrder.dart';
+import 'package:order_aja_apps/pages/orderin.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -305,25 +309,41 @@ class _ProfilePageState extends State<ProfilePage> {
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                               icon: Image.asset('image/home_logo.png'),
                               iconSize: 60,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Homepage(),
+                                ));
+                              },
                             ),
                             IconButton(
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                               icon: Image.asset('image/fork_knife_logo.png'),
                               iconSize: 60,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Menu(),
+                                ));
+                              },
                             ),
                             IconButton(
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                               icon: Image.asset('image/bag_logo.png'),
                               iconSize: 60,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => OrderIn(),
+                                ));
+                              },
                             ),
                             IconButton(
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                               icon: Image.asset('image/profile_logo.png'),
                               iconSize: 60,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ProfilePage(),
+                                ));
+                              },
                             ),
                           ],
                         ),
@@ -335,6 +355,31 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
+        // bottomNavigationBar: Padding(
+        //   padding: EdgeInsets.all(20),
+        //   child: Card(
+        //     elevation: 8.0,
+        //     shape:
+        //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        //     child: BottomNavigationBar(
+        //       backgroundColor: Colors.white,
+        //       currentIndex: 0,
+        //       selectedItemColor: Color.fromARGB(255, 255, 187, 1),
+        //       unselectedItemColor: Color.fromARGB(255, 15, 23, 43),
+        //       iconSize: 40,
+        //       showUnselectedLabels: true,
+        //       items: [
+        //         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home',),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(Icons.food_bank_outlined), label: 'Menu'),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(Icons.shopping_bag_outlined), label: 'Pesanan'),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(Icons.person_sharp), label: 'Profil')
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }

@@ -1,12 +1,36 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:order_aja_apps/pages/profile.dart';
 import 'package:order_aja_apps/pages/register.dart';
+import 'package:http/http.dart' as http;
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
   Widget build(BuildContext context) {
+    TextEditingController emailC = TextEditingController();
+    TextEditingController PassC = TextEditingController();
+
+    List allUser = [];
+
+    Future getAllUser() async {
+      try {
+        var response = await http.get(Uri.parse(
+            "https://63ad9ceeceaabafcf167656e.mockapi.io/USER_KASIR"));
+        print(response.body);
+        List data = (json.decode(response.body));
+        print(data);
+      } catch (e) {}
+    }
+
     return MaterialApp(
       home: Scaffold(
         body: ListView(
@@ -62,6 +86,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     TextField(
+                        controller: emailC,
                         autocorrect: false,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -85,6 +110,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     TextField(
+                        controller: PassC,
                         autocorrect: false,
                         obscureText: true,
                         decoration: InputDecoration(
@@ -104,7 +130,22 @@ class LoginPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              var response = await http.get(Uri.parse(
+                                  "https://63ad9ceeceaabafcf167656e.mockapi.io/USER_KASIR"));
+                              print(response.body);
+                              print(emailC);
+                              print(PassC);
+                              List data = (json.decode(response.body));
+                              data.forEach((element) {
+                                if (element['email'] == emailC.text &&
+                                    element['password'] == PassC.text) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ProfilePage(),
+                                  ));
+                                }
+                              });
+                            },
                             style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 60, vertical: 25),
